@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Slides\\Saml2\\": "src/"
+            "HROC\\Saml2\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -36,10 +36,10 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "Saml2": "Slides\\Saml2\\Facades\\Auth"
+                "Saml2": "Mkhyman\\Saml2\\Facades\\Auth"
             },
             "providers": [
-                "Slides\\Saml2\\ServiceProvider"
+                "Mkhyman\\Saml2\\ServiceProvider"
             ]
         },
         "branch-aliases": {

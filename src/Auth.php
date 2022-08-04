@@ -1,16 +1,16 @@
 <?php
 
-namespace Slides\Saml2;
+namespace Mkhyman\Saml2;
 
 use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Error as OneLoginError;
-use Slides\Saml2\Events\SignedOut;
-use Slides\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Events\SignedOut;
+use Mkhyman\Saml2\Models\Tenant;
 
 /**
  * Class Auth
  *
- * @package Slides\Saml2
+ * @package Mkhyman\Saml2
  */
 class Auth
 {

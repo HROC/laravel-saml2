@@ -1,13 +1,13 @@
 <?php
 
-namespace Slides\Saml2\Commands;
+namespace Mkhyman\Saml2\Commands;
 
-use Slides\Saml2\Repositories\TenantRepository;
+use Mkhyman\Saml2\Repositories\TenantRepository;
 
 /**
  * Class RestoreTenant
  *
- * @package Slides\Saml2\Commands
+ * @package Mkhyman\Saml2\Commands
  */
 class RestoreTenant extends \Illuminate\Console\Command
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Slides\Saml2\Models;
+namespace Mkhyman\Saml2\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
  *
- * @package Slides\Saml2\Models
+ * @package Mkhyman\Saml2\Models
  */
 class Tenant extends Model
 {

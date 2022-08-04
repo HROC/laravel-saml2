@@ -1,18 +1,18 @@
 <?php
 
-namespace Slides\Saml2;
+namespace Mkhyman\Saml2;
 
 use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Container\Container;
-use Slides\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Models\Tenant;
 use Illuminate\Support\Arr;
 
 /**
  * Class OneLoginBuilder
  *
- * @package Slides\Saml2
+ * @package Mkhyman\Saml2
  */
 class OneLoginBuilder
 {
@@ -83,8 +83,8 @@ class OneLoginBuilder
             return new OneLoginAuth($oneLoginConfig);
         });
 
-        $this->app->singleton('Slides\Saml2\Auth', function ($app) {
-            return new \Slides\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
+        $this->app->singleton('Mkhyman\Saml2\Auth', function ($app) {
+            return new \Mkhyman\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
         });
     }
 
@@ -112,9 +112,9 @@ class OneLoginBuilder
     protected function configDefaultValues()
     {
         return [
-            'sp.entityId' => URL::route('saml.metadata', ['uuid' => $this->tenant->uuid]),
-            'sp.assertionConsumerService.url' => URL::route('saml.acs', ['uuid' => $this->tenant->uuid]),
-            'sp.singleLogoutService.url' => URL::route('saml.sls', ['uuid' => $this->tenant->uuid])
+			'sp.entityId' => URL::route('saml.metadata', ['key' => $this->tenant->key]),
+			'sp.assertionConsumerService.url' => URL::route('saml.acs', ['key' => $this->tenant->key]),
+			'sp.singleLogoutService.url' => URL::route('saml.sls', ['key' => $this->tenant->key])
         ];
     }
 

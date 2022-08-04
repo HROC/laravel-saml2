@@ -1,13 +1,13 @@
 <?php
 
-namespace Slides\Saml2\Repositories;
+namespace Mkhyman\Saml2\Repositories;
 
-use Slides\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Models\Tenant;
 
 /**
  * Class TenantRepository
  *
- * @package Slides\Saml2\Repositories
+ * @package Mkhyman\Saml2\Repositories
  */
 class TenantRepository
 {

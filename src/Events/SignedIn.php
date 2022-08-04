@@ -1,14 +1,14 @@
 <?php
 
-namespace Slides\Saml2\Events;
+namespace Mkhyman\Saml2\Events;
 
-use Slides\Saml2\Saml2User;
-use Slides\Saml2\Auth;
+use Mkhyman\Saml2\Saml2User;
+use Mkhyman\Saml2\Auth;
 
 /**
  * Class LoggedIn
  *
- * @package Slides\Saml2\Events
+ * @package Mkhyman\Saml2\Events
  */
 class SignedIn
 {

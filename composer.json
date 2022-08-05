@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "HROC\\Saml2\\": "src/"
+            "Mkhyman\\Saml2\\": "src/"
         },
         "files": [
             "src/helpers.php"

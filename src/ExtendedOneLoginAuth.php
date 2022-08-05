@@ -1,14 +1,14 @@
 <?php
 namespace Mkhyman\Saml2;
 
-use OneLogin\Saml2\Auth as BaseAuth;
+use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\LogoutResponse;
 use OneLogin\Saml2\LogoutRequest;
 use OneLogin\Saml2\Constants;
 use OneLogin\Saml2\Utils;
 use OneLogin\Saml2\Error;
 
-class OneLoginAuth extends BaseAuth {
+class ExtendedOneLoginAuth extends OneLoginAuth {
 	/**
 	 * Process the SAML Logout Response / Logout Request sent by the IdP.
 	 * Overrides OneLogin\Saml2\Auth to handle both HTTP_POST IDP response instead of HTTP_REDIRECT (GET)
@@ -95,7 +95,7 @@ class OneLoginAuth extends BaseAuth {
 		} else {
 			$this->_errors[] = 'invalid_binding';
 			throw new Error(
-				'SAML LogoutRequest/LogoutResponse not found. Only supported HTTP_REDIRECT Binding',
+				'SAML LogoutRequest/LogoutResponse not found.',
 				Error::SAML_LOGOUTMESSAGE_NOT_FOUND
 			);
 		}

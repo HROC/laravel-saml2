@@ -61,6 +61,7 @@ class ResolveTenant
         }
 
         session()->flash('saml2.tenant.uuid', $tenant->uuid);
+        session()->flash('saml2.tenant.key', $tenant->key);
 
         $this->builder
             ->withTenant($tenant)
@@ -78,9 +79,9 @@ class ResolveTenant
      */
     protected function resolveTenant($request)
     {
-        if(!$uuid = $request->route('uuid')) {
+        if(!$key = $request->route('key')) {
             if (config('saml2.debug')) {
-                Log::debug('[Saml2] Tenant UUID is not present in the URL so cannot be resolved', [
+                Log::debug('[Saml2] Tenant \'key\' is not present in the URL so cannot be resolved', [
                     'url' => $request->fullUrl()
                 ]);
             }
@@ -88,10 +89,10 @@ class ResolveTenant
             return null;
         }
 
-        if(!$tenant = $this->tenants->findByUUID($uuid)) {
+        if(!$tenant = $this->tenants->findByKey($key)) {
             if (config('saml2.debug')) {
                 Log::debug('[Saml2] Tenant doesn\'t exist', [
-                    'uuid' => $uuid
+                    'key' => $key
                 ]);
             }
 
@@ -102,7 +103,8 @@ class ResolveTenant
             if (config('saml2.debug')) {
                 Log::debug('[Saml2] Tenant #' . $tenant->id. ' resolved but marked as deleted', [
                     'id' => $tenant->id,
-                    'uuid' => $uuid,
+                    'key' => $tenant->key,
+                    'uuid' => $tenant->uuid,
                     'deleted_at' => $tenant->deleted_at->toDateTimeString()
                 ]);
             }

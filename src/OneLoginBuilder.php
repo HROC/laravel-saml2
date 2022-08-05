@@ -10,7 +10,7 @@ use Mkhyman\Saml2\Models\Tenant;
 use Illuminate\Support\Arr;
 
 /**
- * Class OneLoginBuilder
+ * Class OneLoginBuilder (DEPRECATED see Helpers\OneLoginConfigGenerator)
  *
  * @package Mkhyman\Saml2
  */

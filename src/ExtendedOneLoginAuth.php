@@ -25,24 +25,37 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 	 */
 	public function processSLO($keepLocalSession = false, $requestId = null, $retrieveParametersFromServer = false, $cbDeleteSession = null, $stay = false)
 	{
-		$this->_errors = array();
-		$this->_lastError = $this->_lastErrorException = null;
+		// can't access _errors so just ignoring it and throwing exceptions instead
+		// $this->_errors = array();
+		// $this->_lastError = $this->_lastErrorException = null;
 
 		# Saml response (HTTP_REDIRECT or HTTP_POST)
 		if (isset($_GET['SAMLResponse']) || isset($_POST['SAMLResponse'])) {
 			if (isset($_GET['SAMLResponse'])) {
-				$logoutResponse = new LogoutResponse($this->_settings, $_GET['SAMLResponse']);
+				$logoutResponse = new LogoutResponse($this->getSettings(), $_GET['SAMLResponse']);
 			} else {
-				$logoutResponse = new LogoutResponse($this->_settings, $_POST['SAMLResponse']);
+				$logoutResponse = new LogoutResponse($this->getSettings(), $_POST['SAMLResponse']);
 			}
 			$this->_lastResponse = $logoutResponse->getXML();
 			if (!$logoutResponse->isValid($requestId, $retrieveParametersFromServer)) {
-				$this->_errors[] = 'invalid_logout_response';
-				$this->_lastErrorException = $logoutResponse->getErrorException();
-				$this->_lastError = $logoutResponse->getError();
+				// $this->_errors[] = 'invalid_logout_response';
+				// $this->_lastErrorException = $logoutResponse->getErrorException();
+				// $this->_lastError = $logoutResponse->getError();
+
+				// since we can't access $this->_errors (private) throw and error instead
+				throw new Error(
+					'SAML Invalid logout response.',
+					Error::SAML_LOGOUTRESPONSE_INVALID
+				);
 
 			} else if ($logoutResponse->getStatus() !== Constants::STATUS_SUCCESS) {
-				$this->_errors[] = 'logout_not_success';
+				// $this->_errors[] = 'logout_not_success';
+
+				// since we can't access $this->_errors (private) throw and error instead
+				throw new Error(
+					'SAML Failed logout status.',
+					Error::SAML_LOGOUTRESPONSE_INVALID		// no code for failed logout so have to use this
+				);
 			} else {
 				$this->_lastMessageId = $logoutResponse->id;
 				if (!$keepLocalSession) {
@@ -56,12 +69,18 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 
 		# Saml request (HTTP_REDIRECT only)
 		} else if (isset($_GET['SAMLRequest'])) {
-			$logoutRequest = new LogoutRequest($this->_settings, $_GET['SAMLRequest']);
+			$logoutRequest = new LogoutRequest($this->getSettings(), $_GET['SAMLRequest']);
 			$this->_lastRequest = $logoutRequest->getXML();
 			if (!$logoutRequest->isValid($retrieveParametersFromServer)) {
-				$this->_errors[] = 'invalid_logout_request';
-				$this->_lastErrorException = $logoutRequest->getErrorException();
-				$this->_lastError = $logoutRequest->getError();
+				// $this->_errors[] = 'invalid_logout_request';
+				// $this->_lastErrorException = $logoutRequest->getErrorException();
+				// $this->_lastError = $logoutRequest->getError();
+
+				// since we can't access $this->_errors (private) throw and error instead
+				throw new Error(
+					'SAML Invalid logout request.',
+					Error::SAML_LOGOUTRESPONSE_INVALID		// no code for invalid logout request so have to use this
+				);
 			} else {
 				if (!$keepLocalSession) {
 					if ($cbDeleteSession === null) {
@@ -72,7 +91,7 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 				}
 				$inResponseTo = $logoutRequest->id;
 				$this->_lastMessageId = $logoutRequest->id;
-				$responseBuilder = new LogoutResponse($this->_settings);
+				$responseBuilder = new LogoutResponse($this->getSettings());
 				$responseBuilder->build($inResponseTo);
 				$this->_lastResponse = $responseBuilder->getXML();
 
@@ -83,7 +102,7 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 					$parameters['RelayState'] = $_GET['RelayState'];
 				}
 
-				$security = $this->_settings->getSecurityData();
+				$security = $this->getSettings()->getSecurityData();
 				if (isset($security['logoutResponseSigned']) && $security['logoutResponseSigned']) {
 					$signature = $this->buildResponseSignature($logoutResponse, isset($parameters['RelayState'])? $parameters['RelayState']: null, $security['signatureAlgorithm']);
 					$parameters['SigAlg'] = $security['signatureAlgorithm'];
@@ -93,7 +112,8 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 				return $this->redirectTo($this->getSLOResponseUrl(), $parameters, $stay);
 			}
 		} else {
-			$this->_errors[] = 'invalid_binding';
+			// cant access _errors so have to rely on exception
+			//$this->_errors[] = 'invalid_binding';
 			throw new Error(
 				'SAML LogoutRequest/LogoutResponse not found.',
 				Error::SAML_LOGOUTMESSAGE_NOT_FOUND

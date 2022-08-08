@@ -49,7 +49,7 @@ class TenantRepository
         
         return $this->query($withTrashed)
             ->where($check, $value)
-            ->get();
+            ->first();
     }
 
     /**

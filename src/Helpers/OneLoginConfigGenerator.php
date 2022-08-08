@@ -17,7 +17,7 @@ class OneLoginConfigGenerator {
 	}
 
 	public function generateOneLoginConfig() {
-		$oneLoginConfig = $this->config;
+		$oneLoginConfig = $this->samlConfig;
 
 		$this->applyConfigDefaultValues($oneLoginConfig);
 

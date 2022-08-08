@@ -8,7 +8,7 @@ use Mkhyman\Saml2\Auth as MkhymanAuth;
 use Mkhyman\Saml2\ExtendedOneLoginAuth;
 use Onelogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
-use MkHyman\Saml2\Repositories\TenantRepository;
+use Mkhyman\Saml2\Repositories\TenantRepository;
 use Mkhyman\Saml2\Models\Tenant;
 
 use Mkhyman\Saml2\Helpers\OneLoginConfigGenerator;

@@ -60,7 +60,7 @@ class TenantRepository
      *
      * @return Tenant[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function matchAnyIdentifier($key, bool $withTrashed = true) : ?Tenant {
+    public function matchAnyIdentifier($key, bool $withTrashed = true) : Collection {
         return $this->query($withTrashed)
             ->where('id', $key)
             ->orWhere('key', $key)

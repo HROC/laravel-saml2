@@ -6,7 +6,6 @@ use Mkhyman\Saml2\Models\Tenant;
 use Mkhyman\Saml2\Repositories\TenantRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Mkhyman\Saml2\OneLoginBuilder;
 
 /**
  * Class ResolveTenant
@@ -25,9 +24,8 @@ class ResolveTenant {
      * ResolveTenant constructor.
      *
      * @param TenantRepository $tenants
-     * @param OneLoginBuilder $builder
      */
-    public function __construct(TenantRepository $tenants, OneLoginBuilder $builder) {
+    public function __construct(TenantRepository $tenants) {
         $resolveBy = config('saml2.routeIdpIdentifier');
         if (!in_array($resolveBy, ['id', 'key', 'uuid'])) {
             throw new \Exception('Invalid route idp check.');

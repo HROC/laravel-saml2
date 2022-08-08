@@ -52,10 +52,11 @@ class OneLoginConfigGenerator {
 	 * @return array
 	 */
 	protected function configDefaultValues() {
+		$match = config('saml2.routeIdpIdentifier');
 		return [
-			'sp.entityId' => URL::route('saml.metadata', ['key' => $this->tenant->key]),
-			'sp.assertionConsumerService.url' => URL::route('saml.acs', ['key' => $this->tenant->key]),
-			'sp.singleLogoutService.url' => URL::route('saml.sls', ['key' => $this->tenant->key])
+			'sp.entityId' => URL::route('saml.metadata', ['idp' => $this->tenant->{$match}]),
+			'sp.assertionConsumerService.url' => URL::route('saml.acs', ['idp' => $this->tenant->{$match}]),
+			'sp.singleLogoutService.url' => URL::route('saml.sls', ['idp' => $this->tenant->{$match}])
 		];
 	}
 

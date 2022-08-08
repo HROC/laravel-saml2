@@ -82,12 +82,13 @@ trait RendersTenants
     protected function renderTenantCredentials(\Mkhyman\Saml2\Models\Tenant $tenant)
     {
         $this->output->section('Credentials for the tenant');
+        $match = config('saml2.routeIdpIdentifier');
 
         $this->getOutput()->text([
-            'Identifier (Entity ID): <comment>' . route('saml.metadata', ['uuid' => $tenant->uuid]) . '</comment>',
-            'Reply URL (Assertion Consumer Service URL): <comment>' . route('saml.acs', ['uuid' => $tenant->uuid]) . '</comment>',
-            'Sign on URL: <comment>' . route('saml.login', ['uuid' => $tenant->uuid]) . '</comment>',
-            'Logout URL: <comment>' . route('saml.logout', ['uuid' => $tenant->uuid]) . '</comment>',
+            'Identifier (Entity ID): <comment>' . route('saml.metadata', ['idp' => $tenant->{$match}]) . '</comment>',
+            'Reply URL (Assertion Consumer Service URL): <comment>' . route('saml.acs', ['idp' => $tenant->{$match}]) . '</comment>',
+            'Sign on URL: <comment>' . route('saml.login', ['idp' => $tenant->{$match}]) . '</comment>',
+            'Logout URL: <comment>' . route('saml.logout', ['idp' => $tenant->{$match}]) . '</comment>',
             'Relay State: <comment>' . ($tenant->relay_state_url ?: config('saml2.loginRoute')) . ' (optional)</comment>'
         ]);
     }

@@ -8,6 +8,7 @@ use Mkhyman\Saml2\Auth as MkhymanAuth;
 use Mkhyman\Saml2\ExtendedOneLoginAuth;
 use Onelogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
+use MkHyman\Saml2\Repositories\TenantRepository;
 use Mkhyman\Saml2\Models\Tenant;
 
 use Mkhyman\Saml2\Helpers\OneLoginConfigGenerator;
@@ -25,12 +26,16 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected $defer = false;
 
+	private TenantRepository $tenantRepo;
+
 	/**
 	 * Bootstrap the application events.
 	 *
 	 * @return void
 	 */
 	public function boot() {
+		$this->tenantRepo = new TenantRepository();
+
 		$this->bootMiddleware();
 		$this->bootRoutes();
 		$this->bootPublishes();
@@ -55,7 +60,14 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected function createBindings() {
 		$this->app->singleton(ExtendedOneLoginAuth::class, function($app) {
+			if (config('saml2.proxyVars', false)) {
+				OneLoginUtils::setProxyVars(true);
+			}
+
+			$configGenerator = new OneLoginConfigGenerator(config('saml2'), $this->getSessionTenant());
+			$oneLoginConfig = $configGenerator->generateOneLoginConfig();
 			
+			return new ExtendedOneLoginAuth($oneLoginConfig);
 		});
 
 		$this->app->singleton(MkhymanAuth::class, function($app) {
@@ -63,14 +75,7 @@ class ServiceProvider extends IlluminateServiceProvider {
 		});
 
 		$this->app->singleton(OneLoginAuth::class, function($app) {
-			if (config('saml2.proxyVars', false)) {
-				OneLoginUtils::setProxyVars(true);
-			}
-
-			$configGenerator = new OneLoginConfigGenerator(config('saml2'), $this->getSessionTenant());
-			$oneLoginConfig = $configGenerator->generateOneLoginConfig();
-
-			return new ExtendedOneLoginAuth($oneLoginConfig);
+			return $app->make(ExtendedOneLoginAuth::class);
 		});
 	}
 
@@ -118,7 +123,8 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 * @return void
 	 */
 	protected function bootMiddleware() {
-		$this->app['router']->aliasMiddleware('saml2.resolveTenant', \Mkhyman\Saml2\Http\Middleware\ResolveTenant::class);
+		$router = $this->app->make('router');
+		$router->aliasMiddleware('saml2.resolveTenant', \Mkhyman\Saml2\Http\Middleware\ResolveTenant::class);
 	}
 
 	/**
@@ -130,14 +136,10 @@ class ServiceProvider extends IlluminateServiceProvider {
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 	}
 	
-	protected function getSessionTenant() {
-		$key = session('saml2.tenant.uuid');
-		return $this->getTenant($key);
-	}
-
-	protected function getTenant($key) {
-		if(!$tenant = Tenant::where('key', '=', $key)->first()) {
-			throw new \Exception('Missing SSO tenant key.');
+	protected function getSessionTenant() : ?Tenant {
+		if(!$id = session('saml2.tenant.id')) {
+			throw new \Exception('Unable to retrieve SSO tenant from session, missing tenant id.');
 		}
+		return $this->tenantRepo->findById($id);
 	}
 }

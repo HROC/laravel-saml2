@@ -52,7 +52,7 @@ class DeleteTenant extends \Illuminate\Console\Command
      */
     public function handle()
     {
-        $tenants = $this->tenants->findByAnyIdentifier($this->argument('tenant'), false);
+        $tenants = $this->tenants->matchAnyIdentifier($this->argument('tenant'), false);
 
         if($tenants->isEmpty()) {
             $this->error('Cannot find a matching tenant by "' . $this->argument('tenant') . '" identifier');

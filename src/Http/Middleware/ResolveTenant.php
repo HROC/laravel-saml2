@@ -2,6 +2,7 @@
 
 namespace Mkhyman\Saml2\Http\Middleware;
 
+use Mkhyman\Saml2\Models\Tenant;
 use Mkhyman\Saml2\Repositories\TenantRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,17 +13,13 @@ use Mkhyman\Saml2\OneLoginBuilder;
  *
  * @package Mkhyman\Saml2\Http\Middleware
  */
-class ResolveTenant
-{
+class ResolveTenant {
+    protected string $resolveBy;
+
     /**
      * @var TenantRepository
      */
     protected $tenants;
-
-    /**
-     * @var OneLoginBuilder
-     */
-    protected $builder;
 
     /**
      * ResolveTenant constructor.
@@ -30,10 +27,14 @@ class ResolveTenant
      * @param TenantRepository $tenants
      * @param OneLoginBuilder $builder
      */
-    public function __construct(TenantRepository $tenants, OneLoginBuilder $builder)
-    {
+    public function __construct(TenantRepository $tenants, OneLoginBuilder $builder) {
+        $resolveBy = config('saml2.routeIdpIdentifier');
+        if (!in_array($resolveBy, ['id', 'key', 'uuid'])) {
+            throw new \Exception('Invalid route idp check.');
+        }
+
+        $this->resolveBy = $resolveBy;
         $this->tenants = $tenants;
-        $this->builder = $builder;
     }
 
     /**
@@ -46,8 +47,7 @@ class ResolveTenant
      *
      * @return mixed
      */
-    public function handle($request, \Closure $next)
-    {
+    public function handle($request, \Closure $next) {
         if(!$tenant = $this->resolveTenant($request)) {
             throw new NotFoundHttpException();
         }
@@ -60,12 +60,9 @@ class ResolveTenant
             ]);
         }
 
+        session()->flash('saml2.tenant.id', $tenant->id);
         session()->flash('saml2.tenant.uuid', $tenant->uuid);
         session()->flash('saml2.tenant.key', $tenant->key);
-
-        $this->builder
-            ->withTenant($tenant)
-            ->bootstrap();
 
         return $next($request);
     }
@@ -77,11 +74,10 @@ class ResolveTenant
      *
      * @return \Mkhyman\Saml2\Models\Tenant|null
      */
-    protected function resolveTenant($request)
-    {
-        if(!$key = $request->route('key')) {
+    protected function resolveTenant($request) : ?Tenant {
+        if(!$idp = $request->route('idp')) {
             if (config('saml2.debug')) {
-                Log::debug('[Saml2] Tenant \'key\' is not present in the URL so cannot be resolved', [
+                Log::debug('[Saml2] Tenant \'idp\' is not present in the URL so cannot be resolved.', [
                     'url' => $request->fullUrl()
                 ]);
             }
@@ -89,10 +85,10 @@ class ResolveTenant
             return null;
         }
 
-        if(!$tenant = $this->tenants->findByKey($key)) {
+        if(!$tenant = $this->tenants->findBy($idp, $this->resolveBy)) {
             if (config('saml2.debug')) {
                 Log::debug('[Saml2] Tenant doesn\'t exist', [
-                    'key' => $key
+                    $idp => $this->resolveBy
                 ]);
             }
 

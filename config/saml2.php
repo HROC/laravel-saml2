@@ -11,15 +11,27 @@ return [
     |
     | Method | URI                               | Name
     | -------|-----------------------------------|------------------
-    | POST   | {routesPrefix}/{idpKey}/acs       | saml.acs
-    | GET    | {routesPrefix}/{idpKey}/login     | saml.login
-    | GET    | {routesPrefix}/{idpKey}/logout    | saml.logout
-    | GET    | {routesPrefix}/{idpKey}/metadata  | saml.metadata
-    | GET    | {routesPrefix}/{idpKey}/sls       | saml.sls
+    | POST   | {routesPrefix}/{idp}/acs       | saml.acs
+    | GET    | {routesPrefix}/{idp}/login     | saml.login
+    | GET    | {routesPrefix}/{idp}/logout    | saml.logout
+    | GET    | {routesPrefix}/{idp}/metadata  | saml.metadata
+    | GET    | {routesPrefix}/{idp}/sls       | saml.sls
     |
     */
 
     'useRoutes' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Idp identifier
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the idp identifier in the route. 
+    | Can be one of 'id', 'key', 'uuid'.
+    |
+    */
+
+    'routeIdpIdentifier' => 'key',
 
     /*
     |--------------------------------------------------------------------------

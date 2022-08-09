@@ -2,6 +2,7 @@
 
 namespace Mkhyman\Saml2\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth as LaravelAuth;
 use Mkhyman\Saml2\Events\SignedIn;
 use Mkhyman\Saml2\Auth;
 use Illuminate\Routing\Controller;
@@ -124,9 +125,12 @@ class Saml2Controller extends Controller
      */
     public function logout(Request $request, Auth $auth)
     {
+        // use email as nameId
+		$nameId = LaravelAuth::user()?->email;
+
         $auth->logout(
             $request->query('returnTo'),
-            $request->query('nameId'),
+            $nameId, //$request->query('nameId'),
             $request->query('sessionIndex')
         );
     }

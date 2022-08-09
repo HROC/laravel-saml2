@@ -2,7 +2,8 @@
 
 namespace Mkhyman\Saml2;
 
-use OneLogin\Saml2\Auth as OneLoginAuth;
+//use OneLogin\Saml2\Auth as OneLoginAuth;
+use Mkhyman\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
 use Mkhyman\Saml2\Models\Tenant;
 
 /**

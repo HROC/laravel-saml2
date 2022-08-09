@@ -28,6 +28,8 @@ class OneLoginConfigGenerator {
 			'x509cert' => $this->tenant->idp_x509_cert
 		];
 
+		$oneLoginConfig['sp']['NameIDFormat'] = $this->resolveNameIdFormatPrefix($this->tenant->name_id_format);
+
 		return $oneLoginConfig;
 	}
 

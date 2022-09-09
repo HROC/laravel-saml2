@@ -1,14 +1,14 @@
 <?php
 
-namespace HROC\Saml2\Commands;
+namespace Mkhyman\Saml2\Commands;
 
-use HROC\Saml2\Helpers\ConsoleHelper;
-use HROC\Saml2\Repositories\TenantRepository;
+use Mkhyman\Saml2\Helpers\ConsoleHelper;
+use Mkhyman\Saml2\Repositories\TenantRepository;
 
 /**
  * Class UpdateTenant
  *
- * @package HROC\Saml2\Commands
+ * @package Mkhyman\Saml2\Commands
  */
 class UpdateTenant extends \Illuminate\Console\Command
 {

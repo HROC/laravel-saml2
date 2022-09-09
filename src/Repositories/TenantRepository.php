@@ -1,14 +1,14 @@
 <?php
 
-namespace HROC\Saml2\Repositories;
+namespace Mkhyman\Saml2\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use HROC\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Models\Tenant;
 
 /**
  * Class TenantRepository
  *
- * @package HROC\Saml2\Repositories
+ * @package Mkhyman\Saml2\Repositories
  */
 class TenantRepository
 {

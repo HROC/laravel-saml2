@@ -1,18 +1,18 @@
 <?php
 
-namespace HROC\Saml2;
+namespace Mkhyman\Saml2;
 
 use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Container\Container;
-use HROC\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Models\Tenant;
 use Illuminate\Support\Arr;
 
 /**
  * Class OneLoginBuilder (DEPRECATED see Helpers\OneLoginConfigGenerator)
  *
- * @package HROC\Saml2
+ * @package Mkhyman\Saml2
  */
 class OneLoginBuilder
 {
@@ -83,8 +83,8 @@ class OneLoginBuilder
             return new OneLoginAuth($oneLoginConfig);
         });
 
-        $this->app->singleton('HROC\Saml2\Auth', function ($app) {
-            return new \HROC\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
+        $this->app->singleton('Mkhyman\Saml2\Auth', function ($app) {
+            return new \Mkhyman\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
         });
     }
 

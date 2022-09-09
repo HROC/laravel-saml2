@@ -1,11 +1,11 @@
 <?php
 
-namespace HROC\Saml2\Events;
+namespace Mkhyman\Saml2\Events;
 
 /**
  * Class LoggedOut
  *
- * @package HROC\Saml2\Events
+ * @package Mkhyman\Saml2\Events
  */
 class SignedOut
 {

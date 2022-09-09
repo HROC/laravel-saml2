@@ -1,6 +1,6 @@
 <?php
 
-namespace HROC\Saml2\Helpers;
+namespace Mkhyman\Saml2\Helpers;
 
 use Illuminate\Support\Arr;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace HROC\Saml2\Events;
+namespace Mkhyman\Saml2\Events;
 
-use HROC\Saml2\Saml2User;
-use HROC\Saml2\Auth;
+use Mkhyman\Saml2\Saml2User;
+use Mkhyman\Saml2\Auth;
 
 /**
  * Class LoggedIn
  *
- * @package HROC\Saml2\Events
+ * @package Mkhyman\Saml2\Events
  */
 class SignedIn
 {

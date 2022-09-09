@@ -1,16 +1,16 @@
 <?php
 
-namespace HROC\Saml2\Http\Middleware;
+namespace Mkhyman\Saml2\Http\Middleware;
 
-use HROC\Saml2\Models\Tenant;
-use HROC\Saml2\Repositories\TenantRepository;
+use Mkhyman\Saml2\Models\Tenant;
+use Mkhyman\Saml2\Repositories\TenantRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ResolveTenant
  *
- * @package HROC\Saml2\Http\Middleware
+ * @package Mkhyman\Saml2\Http\Middleware
  */
 class ResolveTenant {
     protected string $resolveBy;
@@ -70,7 +70,7 @@ class ResolveTenant {
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return \HROC\Saml2\Models\Tenant|null
+     * @return \Mkhyman\Saml2\Models\Tenant|null
      */
     protected function resolveTenant($request) : ?Tenant {
         if(!$idp = $request->route('idp')) {

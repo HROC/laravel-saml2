@@ -1,28 +1,28 @@
 <?php
 
-namespace HROC\Saml2\Commands;
+namespace Mkhyman\Saml2\Commands;
 
 use Illuminate\Support\Str;
 
 /**
  * Class CreateTenant
  *
- * @package HROC\Saml2\Commands
+ * @package Mkhyman\Saml2\Commands
  */
 trait RendersTenants
 {
     /**
      * Render tenants in a table.
      *
-     * @param \HROC\Saml2\Models\Tenant|\Illuminate\Support\Collection $tenants
+     * @param \Mkhyman\Saml2\Models\Tenant|\Illuminate\Support\Collection $tenants
      * @param string|null $title
      *
      * @return void
      */
     protected function renderTenants($tenants, string $title = null)
     {
-        /** @var \HROC\Saml2\Models\Tenant[]|\Illuminate\Database\Eloquent\Collection $tenants */
-        $tenants = $tenants instanceof \HROC\Saml2\Models\Tenant
+        /** @var \Mkhyman\Saml2\Models\Tenant[]|\Illuminate\Database\Eloquent\Collection $tenants */
+        $tenants = $tenants instanceof \Mkhyman\Saml2\Models\Tenant
             ? collect([$tenants])
             : $tenants;
 
@@ -49,11 +49,11 @@ trait RendersTenants
     /**
      * Get a columns of the Tenant.
      *
-     * @param \HROC\Saml2\Models\Tenant $tenant
+     * @param \Mkhyman\Saml2\Models\Tenant $tenant
      *
      * @return array
      */
-    protected function getTenantColumns(\HROC\Saml2\Models\Tenant $tenant)
+    protected function getTenantColumns(\Mkhyman\Saml2\Models\Tenant $tenant)
     {
         return [
             'ID' => $tenant->id,
@@ -75,11 +75,11 @@ trait RendersTenants
     /**
      * Render a tenant credentials.
      *
-     * @param \HROC\Saml2\Models\Tenant $tenant
+     * @param \Mkhyman\Saml2\Models\Tenant $tenant
      *
      * @return void
      */
-    protected function renderTenantCredentials(\HROC\Saml2\Models\Tenant $tenant)
+    protected function renderTenantCredentials(\Mkhyman\Saml2\Models\Tenant $tenant)
     {
         $this->output->section('Credentials for the tenant');
         $match = config('saml2.routeIdpIdentifier');

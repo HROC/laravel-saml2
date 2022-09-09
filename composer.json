@@ -1,14 +1,14 @@
 {
-    "name": "hroc/laravel-saml2",
+    "name": "mkhyman/laravel-saml2",
     "type": "library",
     "description": "SAML2 Service Provider integration to your Laravel 5.4+ application, based on OneLogin toolkit",
     "keywords": ["laravel", "saml", "saml2", "onelogin", "sso"],
-    "homepage": "https://github.com/hroc/laravel-saml2",
+    "homepage": "https://github.com/mkhyman/laravel-saml2",
     "license": "MIT",
     "authors": [
         {
-            "name": "HROC",
-            "email": "webmaster@hroc.co.uk"
+            "name": "Mike Hyman",
+            "email": "mky.hyman@gmail.com"
         }
     ],
     "require": {
@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "HROC\\Saml2\\": "src/"
+            "Mkhyman\\Saml2\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -36,10 +36,10 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "Saml2": "HROC\\Saml2\\Facades\\Auth"
+                "Saml2": "Mkhyman\\Saml2\\Facades\\Auth"
             },
             "providers": [
-                "HROC\\Saml2\\ServiceProvider"
+                "Mkhyman\\Saml2\\ServiceProvider"
             ]
         },
         "branch-aliases": {

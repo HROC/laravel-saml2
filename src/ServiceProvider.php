@@ -28,6 +28,8 @@ class ServiceProvider extends IlluminateServiceProvider {
 
 	private TenantRepository $tenantRepo;
 
+	public function register() {}
+
 	/**
 	 * Bootstrap the application events.
 	 *

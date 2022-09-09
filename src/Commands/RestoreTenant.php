@@ -1,13 +1,13 @@
 <?php
 
-namespace Mkhyman\Saml2\Commands;
+namespace HROC\Saml2\Commands;
 
-use Mkhyman\Saml2\Repositories\TenantRepository;
+use HROC\Saml2\Repositories\TenantRepository;
 
 /**
  * Class RestoreTenant
  *
- * @package Mkhyman\Saml2\Commands
+ * @package HROC\Saml2\Commands
  */
 class RestoreTenant extends \Illuminate\Console\Command
 {

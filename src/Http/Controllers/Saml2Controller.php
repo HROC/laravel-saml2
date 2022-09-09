@@ -1,10 +1,10 @@
 <?php
 
-namespace Mkhyman\Saml2\Http\Controllers;
+namespace HROC\Saml2\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth as LaravelAuth;
-use Mkhyman\Saml2\Events\SignedIn;
-use Mkhyman\Saml2\Auth;
+use HROC\Saml2\Events\SignedIn;
+use HROC\Saml2\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use OneLogin\Saml2\Error as OneLoginError;
@@ -12,7 +12,7 @@ use OneLogin\Saml2\Error as OneLoginError;
 /**
  * Class Saml2Controller
  *
- * @package Mkhyman\Saml2\Http\Controllers
+ * @package HROC\Saml2\Http\Controllers
  */
 class Saml2Controller extends Controller
 {

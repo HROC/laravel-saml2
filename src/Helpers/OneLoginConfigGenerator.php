@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
-namespace Mkhyman\Saml2\Helpers;
+namespace HROC\Saml2\Helpers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\URL;
 
-use Mkhyman\Saml2\Models\Tenant;
+use HROC\Saml2\Models\Tenant;
 
 class OneLoginConfigGenerator {
 	private array $samlConfig;

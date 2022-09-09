@@ -1,14 +1,14 @@
 <?php
 
-namespace Mkhyman\Saml2\Commands;
+namespace HROC\Saml2\Commands;
 
-use Mkhyman\Saml2\Helpers\ConsoleHelper;
-use Mkhyman\Saml2\Repositories\TenantRepository;
+use HROC\Saml2\Helpers\ConsoleHelper;
+use HROC\Saml2\Repositories\TenantRepository;
 
 /**
  * Class CreateTenant
  *
- * @package Mkhyman\Saml2\Commands
+ * @package HROC\Saml2\Commands
  */
 class CreateTenant extends \Illuminate\Console\Command
 {
@@ -93,7 +93,7 @@ class CreateTenant extends \Illuminate\Console\Command
             return;
         }
 
-        $tenant = new \Mkhyman\Saml2\Models\Tenant([
+        $tenant = new \HROC\Saml2\Models\Tenant([
             'key' => $key,
             'uuid' => \Ramsey\Uuid\Uuid::uuid4(),
             'idp_entity_id' => $entityId,

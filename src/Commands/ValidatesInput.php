@@ -1,11 +1,11 @@
 <?php
 
-namespace Mkhyman\Saml2\Commands;
+namespace HROC\Saml2\Commands;
 
 /**
  * Trait ValidatesInput
  *
- * @package Mkhyman\Saml2\Commands
+ * @package HROC\Saml2\Commands
  */
 trait ValidatesInput
 {

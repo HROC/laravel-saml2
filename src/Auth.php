@@ -1,16 +1,16 @@
 <?php
 
-namespace Mkhyman\Saml2;
+namespace HROC\Saml2;
 
-use Mkhyman\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
-use Mkhyman\Saml2\Models\Tenant;
-use Mkhyman\Saml2\Events\SignedOut;
+use HROC\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
+use HROC\Saml2\Models\Tenant;
+use HROC\Saml2\Events\SignedOut;
 use OneLogin\Saml2\Error as OneLoginError;
 
 /**
  * Class Auth
  *
- * @package Mkhyman\Saml2
+ * @package HROC\Saml2
  */
 class Auth
 {

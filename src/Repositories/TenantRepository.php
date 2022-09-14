@@ -37,7 +37,7 @@ class TenantRepository
      *
      * @return Tenant[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($withTrashed = true) : Collection {
+    public function all($withTrashed = true) {
         return $this->query($withTrashed)->get();
     }
 

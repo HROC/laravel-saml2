@@ -126,7 +126,7 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected function bootMiddleware() {
 		$router = $this->app->make('router');
-		$router->aliasMiddleware('saml2.resolveTenant', \Mkhyman\Saml2\Http\Middleware\ResolveTenant::class);
+		$router->middleware('saml2.resolveTenant', \Mkhyman\Saml2\Http\Middleware\ResolveTenant::class);
 	}
 
 	/**

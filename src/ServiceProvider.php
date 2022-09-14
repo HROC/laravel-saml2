@@ -26,7 +26,7 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected $defer = false;
 
-	private TenantRepository $tenantRepo;
+	private $tenantRepo;
 
 	public function register() {}
 

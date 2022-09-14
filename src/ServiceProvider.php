@@ -135,7 +135,14 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 * @return void
 	 */
 	protected function loadMigrations() {
-		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+		/*
+		$this->publishes([
+			__DIR__.'/../database/migrations/' => database_path('/migrations')
+		], 'migrations');
+		*/
+		$this->publishes([
+			__DIR__ . '/../database/migrations' => database_path('/database/migrations')
+		], 'migrations');
 	}
 	
 	protected function getSessionTenant() {

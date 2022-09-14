@@ -19,7 +19,7 @@ class TenantRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(bool $withTrashed = false)
+    public function query($withTrashed = false)
     {
         $query = Tenant::query();
 
@@ -37,11 +37,11 @@ class TenantRepository
      *
      * @return Tenant[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all(bool $withTrashed = true) : Collection {
+    public function all($withTrashed = true) : Collection {
         return $this->query($withTrashed)->get();
     }
 
-    public function findBy(string $value, string $check='uuid', bool $withTrashed = true) : ?Tenant {
+    public function findBy($value, $check='uuid', $withTrashed = true) {
         $allowedChecks = ['id', 'uuid', 'key'];
         if (!in_array($check, $allowedChecks)) {
             throw new \Exception("Attempted to find Saml tenant using invalid field. ($check) is not allowed.");
@@ -60,7 +60,7 @@ class TenantRepository
      *
      * @return Tenant[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function matchAnyIdentifier($key, bool $withTrashed = true) : Collection {
+    public function matchAnyIdentifier($key, $withTrashed = true) {
         return $this->query($withTrashed)
             ->where('id', $key)
             ->orWhere('key', $key)
@@ -76,7 +76,7 @@ class TenantRepository
      *
      * @return Tenant|\Illuminate\Database\Eloquent\Model|null
      */
-    public function findByKey(string $key, bool $withTrashed = true) : ?Tenant {
+    public function findByKey($key, $withTrashed = true) {
         return $this->query($withTrashed)
             ->where('key', $key)
             ->first();
@@ -90,7 +90,7 @@ class TenantRepository
      *
      * @return Tenant|\Illuminate\Database\Eloquent\Model|null
      */
-    public function findById(int $id, bool $withTrashed = true) : ?Tenant {
+    public function findById($id, $withTrashed = true) {
         return $this->query($withTrashed)
             ->where('id', $id)
             ->first();
@@ -104,7 +104,7 @@ class TenantRepository
      *
      * @return Tenant|\Illuminate\Database\Eloquent\Model|null
      */
-    public function findByUUID(string $uuid, bool $withTrashed = true) : ?Tenant {
+    public function findByUUID($uuid, $withTrashed = true) {
         return $this->query($withTrashed)
             ->where('uuid', $uuid)
             ->first();

@@ -16,7 +16,7 @@ trait ValidatesInput
      *
      * @return string|null
      */
-    protected function resolveNameIdFormat(string $option = 'nameIdFormat')
+    protected function resolveNameIdFormat($option = 'nameIdFormat')
     {
         $value = $this->option($option) ?: 'persistent';
 
@@ -36,7 +36,7 @@ trait ValidatesInput
      *
      * @return bool
      */
-    protected function validateNameIdFormat(string $format): bool
+    protected function validateNameIdFormat($format)
     {
         return in_array($format, $this->supportedNameIdFormats());
     }
@@ -48,7 +48,7 @@ trait ValidatesInput
      *
      * @return string[]|array
      */
-    protected function supportedNameIdFormats(): array
+    protected function supportedNameIdFormats()
     {
         return [
             'persistent',

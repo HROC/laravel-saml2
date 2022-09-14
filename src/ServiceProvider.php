@@ -138,7 +138,7 @@ class ServiceProvider extends IlluminateServiceProvider {
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 	}
 	
-	protected function getSessionTenant() : ?Tenant {
+	protected function getSessionTenant() {
 		if(!$id = session('saml2.tenant.id')) {
 			throw new \Exception('Unable to retrieve SSO tenant from session, missing tenant id.');
 		}

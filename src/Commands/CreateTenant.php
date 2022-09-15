@@ -71,7 +71,11 @@ class CreateTenant extends \Illuminate\Console\Command
      */
     protected function configureUsingFluentDefinition()
     {
-        [$name, $arguments, $options] = Parser::parse($this->signature);
+        $parseResponse = Parser::parse($this->signature);
+
+        $name = $parseResponse[0];
+        $arguments = $parseResponse[1];
+        $options = $parseResponse[2];
 
         parent::__construct($this->name = $name);
 

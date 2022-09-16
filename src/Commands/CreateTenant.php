@@ -3,6 +3,7 @@
 namespace Mkhyman\Saml2\Commands;
 
 use Mkhyman\Saml2\Helpers\ConsoleHelper;
+use Mkhyman\Saml2\Helpers\Parser;
 use Mkhyman\Saml2\Repositories\TenantRepository;
 
 /**

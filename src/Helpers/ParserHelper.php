@@ -78,7 +78,9 @@ class ParserHelper {
      */
     protected static function parseArgument($token)
     {
-        [$token, $description] = static::extractDescription($token);
+        $extractedDescription =  static::extractDescription($token);
+        $token = $extractedDescription[0];
+        $description = $extractedDescription[1];
 
         switch (true) {
             case str_ends_with($token, '?*'):

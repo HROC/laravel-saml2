@@ -36,7 +36,7 @@ class CreateTenant extends \Illuminate\Console\Command
      * @var string
      */
     protected $description = 'Create a Tenant entity (relying identity provider)';
-    
+
     /**
      * @var TenantRepository
      */
@@ -70,6 +70,8 @@ class CreateTenant extends \Illuminate\Console\Command
         $name = $parseResponse[0];
         $arguments = $parseResponse[1];
         $options = $parseResponse[2];
+
+        $this->name = $name;
 
         parent::__construct($this->name = $name);
 

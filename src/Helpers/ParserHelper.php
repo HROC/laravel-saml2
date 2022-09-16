@@ -1,7 +1,16 @@
 <?php
 
-namespace MkHyman\Saml2\Helpers;
+namespace Mkhyman\Saml2\Helpers;
 
+use InvalidArgumentException;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+
+/**
+ * Class Parser
+ *
+ * @package App\Helpers
+ */
 class Parser {
     /**
      * Parse the given console command definition into an array.

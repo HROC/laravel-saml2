@@ -11,7 +11,8 @@ use Symfony\Component\Console\Input\InputOption;
  *
  * @package App\Helpers
  */
-class ParserHelper {
+class ParserHelper
+{
     /**
      * Parse the given console command definition into an array.
      *
@@ -20,7 +21,8 @@ class ParserHelper {
      *
      * @throws \InvalidArgumentException
      */
-    public static function parse($expression) {
+    public static function parse($expression)
+    {
         $name = static::name($expression);
 
         if (preg_match_all('/\{\s*(.*?)\s*\}/', $expression, $matches) && count($matches[1])) {
@@ -40,7 +42,7 @@ class ParserHelper {
      */
     protected static function name($expression)
     {
-        if (! preg_match('/[^\s]+/', $expression, $matches)) {
+        if (!preg_match('/[^\s]+/', $expression, $matches)) {
             throw new InvalidArgumentException('Unable to determine command name from signature.');
         }
 
@@ -144,5 +146,14 @@ class ParserHelper {
         $parts = preg_split('/\s+:\s+/', trim($token), 2);
 
         return count($parts) === 2 ? $parts : [$token, ''];
+    }
+
+    function str_ends_with($haystack, $needle)
+    {
+        $length = strlen($needle);
+        if (!$length) {
+            return true;
+        }
+        return substr($haystack, -$length) === $needle;
     }
 }

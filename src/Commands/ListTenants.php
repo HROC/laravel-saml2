@@ -3,6 +3,7 @@
 namespace Mkhyman\Saml2\Commands;
 
 use Mkhyman\Saml2\Repositories\TenantRepository;
+use Mkhyman\Saml2\Helpers\ParserHelper;
 
 /**
  * Class ListTenants
@@ -41,7 +42,33 @@ class ListTenants extends \Illuminate\Console\Command
     {
         $this->tenants = $tenants;
 
-        parent::__construct();
+        if (isset($this->signature)) {
+            $this->configureUsingFluentDefinition();
+        } else {
+            parent::__construct($this->name);
+        }
+    }
+
+    /**
+     * Configure the console command using a fluent definition.
+     *
+     * @return void
+     */
+    protected function configureUsingFluentDefinition()
+    {
+        $parseResponse = ParserHelper::parse($this->signature);
+
+        $name = $parseResponse[0];
+        $arguments = $parseResponse[1];
+        $options = $parseResponse[2];
+
+        parent::__construct($this->name = $name);
+
+        // After parsing the signature we will spin through the arguments and options
+        // and set them on this command. These will already be changed into proper
+        // instances of these "InputArgument" and "InputOption" Symfony classes.
+        $this->getDefinition()->addArguments($arguments);
+        $this->getDefinition()->addOptions($options);
     }
 
     /**

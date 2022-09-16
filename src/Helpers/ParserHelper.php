@@ -85,11 +85,11 @@ class ParserHelper
         $description = $extractedDescription[1];
 
         switch (true) {
-            case str_ends_with($token, '?*'):
+            case static::str_ends_with($token, '?*'):
                 return new InputArgument(trim($token, '?*'), InputArgument::IS_ARRAY, $description);
-            case str_ends_with($token, '*'):
+            case static::str_ends_with($token, '*'):
                 return new InputArgument(trim($token, '*'), InputArgument::IS_ARRAY | InputArgument::REQUIRED, $description);
-            case str_ends_with($token, '?'):
+            case static::str_ends_with($token, '?'):
                 return new InputArgument(trim($token, '?'), InputArgument::OPTIONAL, $description);
             case preg_match('/(.+)\=\*(.+)/', $token, $matches):
                 return new InputArgument($matches[1], InputArgument::IS_ARRAY, $description, preg_split('/,\s?/', $matches[2]));
@@ -122,9 +122,9 @@ class ParserHelper
         }
 
         switch (true) {
-            case str_ends_with($token, '='):
+            case static::str_ends_with($token, '='):
                 return new InputOption(trim($token, '='), $shortcut, InputOption::VALUE_OPTIONAL, $description);
-            case str_ends_with($token, '=*'):
+            case static::str_ends_with($token, '=*'):
                 return new InputOption(trim($token, '=*'), $shortcut, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, $description);
             case preg_match('/(.+)\=\*(.+)/', $token, $matches):
                 return new InputOption($matches[1], $shortcut, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, $description, preg_split('/,\s?/', $matches[2]));
@@ -148,7 +148,14 @@ class ParserHelper
         return count($parts) === 2 ? $parts : [$token, ''];
     }
 
-    function str_ends_with($haystack, $needle)
+    /**
+     * Find if string ends with a specific substring
+     * 
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
+     */
+    protected static function str_ends_with($haystack, $needle)
     {
         $length = strlen($needle);
         if (!$length) {

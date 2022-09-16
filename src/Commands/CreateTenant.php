@@ -42,7 +42,7 @@ class CreateTenant extends \Illuminate\Console\Command
      */
     protected $tenants;
 
-    protected $name = "saml2:create-tenant";
+    protected $name = "saml2-create-tenant";
 
     /**
      * DeleteTenant constructor.

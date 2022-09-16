@@ -36,14 +36,7 @@ class CreateTenant extends \Illuminate\Console\Command
      * @var string
      */
     protected $description = 'Create a Tenant entity (relying identity provider)';
-
-    /**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = "saml2--create-tenant";
-
+    
     /**
      * @var TenantRepository
      */

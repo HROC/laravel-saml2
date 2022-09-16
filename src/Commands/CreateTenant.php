@@ -42,6 +42,8 @@ class CreateTenant extends \Illuminate\Console\Command
      */
     protected $tenants;
 
+    protected $name = "saml2:create-tenant";
+
     /**
      * DeleteTenant constructor.
      *
@@ -70,8 +72,6 @@ class CreateTenant extends \Illuminate\Console\Command
         $name = $parseResponse[0];
         $arguments = $parseResponse[1];
         $options = $parseResponse[2];
-
-        $this->name = $name;
 
         parent::__construct($this->name = $name);
 

@@ -106,7 +106,9 @@ class ParserHelper {
      */
     protected static function parseOption($token)
     {
-        [$token, $description] = static::extractDescription($token);
+        $extractedDescription =  static::extractDescription($token);
+        $token = $extractedDescription[0];
+        $description = $extractedDescription[1];
 
         $matches = preg_split('/\s*\|\s*/', $token, 2);
 

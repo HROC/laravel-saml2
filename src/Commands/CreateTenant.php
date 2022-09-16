@@ -53,11 +53,11 @@ class CreateTenant extends \Illuminate\Console\Command
     {
         $this->tenants = $tenants;
 
-        if (isset($this->signature)) {
-            $this->configureUsingFluentDefinition();
-        } else {
+        //if (isset($this->signature)) {
+           //$this->configureUsingFluentDefinition();
+        //} else {
             parent::__construct($this->name);
-        }
+        //}
     }
 
     /**

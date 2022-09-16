@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
  *
  * @package App\Helpers
  */
-class Parser {
+class ParserHelper {
     /**
      * Parse the given console command definition into an array.
      *

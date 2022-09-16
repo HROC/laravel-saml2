@@ -3,7 +3,7 @@
 namespace Mkhyman\Saml2\Commands;
 
 use Mkhyman\Saml2\Helpers\ConsoleHelper;
-use Mkhyman\Saml2\Helpers\Parser;
+use Mkhyman\Saml2\Helpers\ParserHelper;
 use Mkhyman\Saml2\Repositories\TenantRepository;
 
 /**
@@ -72,7 +72,7 @@ class CreateTenant extends \Illuminate\Console\Command
      */
     protected function configureUsingFluentDefinition()
     {
-        $parseResponse = Parser::parse($this->signature);
+        $parseResponse = ParserHelper::parse($this->signature);
 
         $name = $parseResponse[0];
         $arguments = $parseResponse[1];

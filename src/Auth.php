@@ -166,7 +166,7 @@ class Auth
      */
     public function sls($retrieveParametersFromServer = false)
     {
-        $this->base->processSLO(false, null, $retrieveParametersFromServer, function () {
+        $this->base->processSLO(true, null, $retrieveParametersFromServer, function () {
             event(new SignedOut());
         });
 

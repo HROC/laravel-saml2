@@ -213,7 +213,9 @@ return [
         */
 
         'singleLogoutService' => [
-            'url' => ''
+            'url' => '',
+            // user property that is used as the NameId sent in the SLO request, change this if u need to send a different user property as the nameId (IDP user identifier)
+            'nameIdUserProperty' => env('SSO_SLO_SAML2_NAMEID_USER_PROPERTY', 'email'),
         ],
     ],
 

@@ -125,8 +125,14 @@ class Saml2Controller extends Controller
      */
     public function logout(Request $request, Auth $auth)
     {
-        // use email as nameId
-		$nameId = LaravelAuth::user()?->email;
+        $laravelAuthUser = LaravelAuth::user();
+
+        // work out nameId
+        $nameId = null;
+        if ($laravelAuthUser) {
+            // use property set in config as nameId
+            $nameId = $laravelAuthUser->{config('saml2.sp.singleLogoutService.nameIdUserProperty')};
+        }
 
         $auth->logout(
             $request->query('returnTo'),

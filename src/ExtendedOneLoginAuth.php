@@ -45,7 +45,11 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 				// since we can't access $this->_errors (private) throw and error instead
 				throw new Error(
 					'SAML Invalid logout response.',
-					Error::SAML_LOGOUTRESPONSE_INVALID
+					Error::SAML_LOGOUTRESPONSE_INVALID,
+					[
+						'error' => $logoutResponse->getError(),
+						'exception' => $logoutResponse->getErrorException()
+					]
 				);
 
 			} else if ($logoutResponse->getStatus() !== Constants::STATUS_SUCCESS) {
@@ -54,7 +58,11 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 				// since we can't access $this->_errors (private) throw and error instead
 				throw new Error(
 					'SAML Failed logout status.',
-					Error::SAML_LOGOUTRESPONSE_INVALID		// no code for failed logout so have to use this
+					Error::SAML_LOGOUTRESPONSE_INVALID,		// no code for failed logout so have to use this
+					[
+						'status' => $logoutResponse->getStatus(),
+						'error' => $logoutResponse->getError()
+					]
 				);
 			} else {
 				$this->_lastMessageId = $logoutResponse->id;
@@ -79,7 +87,11 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 				// since we can't access $this->_errors (private) throw and error instead
 				throw new Error(
 					'SAML Invalid logout request.',
-					Error::SAML_LOGOUTRESPONSE_INVALID		// no code for invalid logout request so have to use this
+					Error::SAML_LOGOUTRESPONSE_INVALID,		// no code for invalid logout request so have to use this
+					[
+						'error' => $logoutRequest->getError(),
+						'exception' => $logoutRequest->getErrorException()
+					]
 				);
 			} else {
 				if (!$keepLocalSession) {
@@ -115,7 +127,7 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 			// cant access _errors so have to rely on exception
 			//$this->_errors[] = 'invalid_binding';
 			throw new Error(
-				'SAML LogoutRequest/LogoutResponse not found.',
+				'SAML LogoutRequest/LogoutResponse not found (invalid binding).',
 				Error::SAML_LOGOUTMESSAGE_NOT_FOUND
 			);
 		}

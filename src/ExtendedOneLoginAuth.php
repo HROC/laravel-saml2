@@ -57,7 +57,7 @@ class ExtendedOneLoginAuth extends OneLoginAuth {
 
 				// since we can't access $this->_errors (private) throw and error instead
 				throw new Error(
-					'SAML Failed logout status. [ status: %s ] [ error: $s ]',
+					'SAML Failed logout status. [ status: %s ] [ error: %s ]',
 					Error::SAML_LOGOUTRESPONSE_INVALID,		// no code for failed logout so have to use this
 					[
 						$logoutResponse->getStatus(),

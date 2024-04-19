@@ -1,9 +1,9 @@
 <?php
 
-namespace Mkhyman\Saml2\Tests;
+namespace Hroc\Saml2\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Mkhyman\Saml2\Helpers\ConsoleHelper;
+use Hroc\Saml2\Helpers\ConsoleHelper;
 
 class ConsoleHelperTest extends TestCase
 {

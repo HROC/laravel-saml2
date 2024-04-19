@@ -30,7 +30,7 @@ This package turns your application into Service Provider with the support of mu
 ##### Step 1. Install dependency
 
 ```
-composer require mkhyman/laravel-saml2
+composer require hroc/laravel-saml2
 ```
 
 If you are using Laravel 5.5 and higher, the service provider will be automatically registered.
@@ -52,7 +52,7 @@ For older versions, you have to add the service provider and alias to your `conf
 ##### Step 2. Publish the configuration file.
 
 ```
-php artisan vendor:publish --provider="Mkhyman\Saml2\ServiceProvider"
+php artisan vendor:publish --provider="Hroc\Saml2\ServiceProvider"
 ```
 
 ##### Step 3. Run migrations
@@ -110,10 +110,10 @@ You may disable them by setting `saml2.useRoutes` to `false`.
 
 ### Authentication events
 
-The simplest way to handle SAML authentication is to add listeners on `Mkhyman\Saml2\SignedIn` and `Mkhyman\Saml2\SignedOut` events.
+The simplest way to handle SAML authentication is to add listeners on `Hroc\Saml2\SignedIn` and `Hroc\Saml2\SignedOut` events.
 
 ```php
-Event::listen(\Mkhyman\Saml2\Events\SignedIn::class, function (\Mkhyman\Saml2\Events\SignedIn $event) {
+Event::listen(\Hroc\Saml2\Events\SignedIn::class, function (\Hroc\Saml2\Events\SignedIn $event) {
     $messageId = $event->getAuth()->getLastMessageId();
     
     // your own code preventing reuse of a $messageId to stop replay attacks
@@ -181,7 +181,7 @@ For the second case you will only receive the event. Both cases receive the same
 Note that for the second case, you may have to manually save your session to make the logout stick (as the session is saved by middleware, but the OneLogin library will redirect back to your IdP before that happens):
 
 ```php
-Event::listen('Mkhyman\Saml2\Events\SignedOut', function (SignedOut $event) {
+Event::listen('Hroc\Saml2\Events\SignedOut', function (SignedOut $event) {
     Auth::logout();
     Session::save();
 });

@@ -8,7 +8,7 @@ use Hroc\Saml2\Repositories\TenantRepository;
 /**
  * Class UpdateTenant
  *
- * @package Mkhyman\Saml2\Commands
+ * @package Hroc\Saml2\Commands
  */
 class UpdateTenant extends \Illuminate\Console\Command
 {

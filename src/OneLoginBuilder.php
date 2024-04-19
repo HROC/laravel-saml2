@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 /**
  * Class OneLoginBuilder (DEPRECATED see Helpers\OneLoginConfigGenerator)
  *
- * @package Mkhyman\Saml2
+ * @package Hroc\Saml2
  */
 class OneLoginBuilder
 {
@@ -83,8 +83,8 @@ class OneLoginBuilder
             return new OneLoginAuth($oneLoginConfig);
         });
 
-        $this->app->singleton('Mkhyman\Saml2\Auth', function ($app) {
-            return new \Mkhyman\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
+        $this->app->singleton('Hroc\Saml2\Auth', function ($app) {
+            return new \Hroc\Saml2\Auth($app['OneLogin_Saml2_Auth'], $this->tenant);
         });
     }
 

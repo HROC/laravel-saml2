@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class ResolveTenant
  *
- * @package Mkhyman\Saml2\Http\Middleware
+ * @package Hroc\Saml2\Http\Middleware
  */
 class ResolveTenant {
     protected string $resolveBy;
@@ -70,7 +70,7 @@ class ResolveTenant {
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return \Mkhyman\Saml2\Models\Tenant|null
+     * @return \Hroc\Saml2\Models\Tenant|null
      */
     protected function resolveTenant($request) : ?Tenant {
         if(!$idp = $request->route('idp')) {

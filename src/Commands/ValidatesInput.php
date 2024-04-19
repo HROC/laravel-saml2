@@ -5,7 +5,7 @@ namespace Hroc\Saml2\Commands;
 /**
  * Trait ValidatesInput
  *
- * @package Mkhyman\Saml2\Commands
+ * @package Hroc\Saml2\Commands
  */
 trait ValidatesInput
 {

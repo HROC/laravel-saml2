@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Class Saml2Auth
  *
- * @method static \Mkhyman\Saml2\Models\Tenant|null getTenant()
+ * @method static \Hroc\Saml2\Models\Tenant|null getTenant()
  *
- * @package Mkhyman\Saml2\Facades
+ * @package Hroc\Saml2\Facades
  */
 class Auth extends Facade
 {
@@ -20,6 +20,6 @@ class Auth extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Mkhyman\Saml2\Auth';
+        return 'Hroc\Saml2\Auth';
     }
 }

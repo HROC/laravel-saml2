@@ -1,13 +1,13 @@
 <?php
 
-namespace Mkhyman\Saml2\Commands;
+namespace Hroc\Saml2\Commands;
 
-use Mkhyman\Saml2\Repositories\TenantRepository;
+use Hroc\Saml2\Repositories\TenantRepository;
 
 /**
  * Class DeleteTenant
  *
- * @package Mkhyman\Saml2\Commands
+ * @package Hroc\Saml2\Commands
  */
 class DeleteTenant extends \Illuminate\Console\Command
 {

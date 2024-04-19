@@ -7,7 +7,7 @@ use Hroc\Saml2\Repositories\TenantRepository;
 /**
  * Class ListTenants
  *
- * @package Mkhyman\Saml2\Commands
+ * @package Hroc\Saml2\Commands
  */
 class ListTenants extends \Illuminate\Console\Command
 {

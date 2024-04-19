@@ -10,7 +10,7 @@ use OneLogin\Saml2\Error as OneLoginError;
 /**
  * Class Auth
  *
- * @package Mkhyman\Saml2
+ * @package Hroc\Saml2
  */
 class Auth
 {

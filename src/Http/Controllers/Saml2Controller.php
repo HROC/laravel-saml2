@@ -13,7 +13,7 @@ use OneLogin\Saml2\Error as OneLoginError;
 /**
  * Class Saml2Controller
  *
- * @package Mkhyman\Saml2\Http\Controllers
+ * @package Hroc\Saml2\Http\Controllers
  */
 class Saml2Controller extends Controller
 {

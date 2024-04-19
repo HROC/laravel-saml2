@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
  *
- * @package Mkhyman\Saml2\Models
+ * @package Hroc\Saml2\Models
  */
 class Tenant extends Model
 {

@@ -5,7 +5,7 @@ namespace Hroc\Saml2\Events;
 /**
  * Class LoggedOut
  *
- * @package Mkhyman\Saml2\Events
+ * @package Hroc\Saml2\Events
  */
 class SignedOut
 {

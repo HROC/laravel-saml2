@@ -1,22 +1,22 @@
 <?php
 
-namespace Mkhyman\Saml2;
+namespace Hroc\Saml2;
 
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-use Mkhyman\Saml2\Auth as MkhymanAuth;
-use Mkhyman\Saml2\ExtendedOneLoginAuth;
+use Hroc\Saml2\Auth as HrocAuth;
+use Hroc\Saml2\ExtendedOneLoginAuth;
 use Onelogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
-use Mkhyman\Saml2\Repositories\TenantRepository;
-use Mkhyman\Saml2\Models\Tenant;
+use Hroc\Saml2\Repositories\TenantRepository;
+use Hroc\Saml2\Models\Tenant;
 
-use Mkhyman\Saml2\Helpers\OneLoginConfigGenerator;
+use Hroc\Saml2\Helpers\OneLoginConfigGenerator;
 
 /**
  * Class ServiceProvider
  *
- * @package Mkhyman\Saml2
+ * @package Hroc\Saml2
  */
 class ServiceProvider extends IlluminateServiceProvider {
 	/**
@@ -70,8 +70,8 @@ class ServiceProvider extends IlluminateServiceProvider {
 			return new ExtendedOneLoginAuth($oneLoginConfig);
 		});
 
-		$this->app->singleton(MkhymanAuth::class, function($app) {
-			return new MkhymanAuth($app->make(ExtendedOneLoginAuth::class), $this->getSessionTenant());
+		$this->app->singleton(HrocAuth::class, function($app) {
+			return new HrocAuth($app->make(ExtendedOneLoginAuth::class), $this->getSessionTenant());
 		});
 
 		$this->app->singleton(OneLoginAuth::class, function($app) {
@@ -108,12 +108,12 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected function bootCommands() {
 		$this->commands([
-			\Mkhyman\Saml2\Commands\CreateTenant::class,
-			\Mkhyman\Saml2\Commands\UpdateTenant::class,
-			\Mkhyman\Saml2\Commands\DeleteTenant::class,
-			\Mkhyman\Saml2\Commands\RestoreTenant::class,
-			\Mkhyman\Saml2\Commands\ListTenants::class,
-			\Mkhyman\Saml2\Commands\TenantCredentials::class
+			\Hroc\Saml2\Commands\CreateTenant::class,
+			\Hroc\Saml2\Commands\UpdateTenant::class,
+			\Hroc\Saml2\Commands\DeleteTenant::class,
+			\Hroc\Saml2\Commands\RestoreTenant::class,
+			\Hroc\Saml2\Commands\ListTenants::class,
+			\Hroc\Saml2\Commands\TenantCredentials::class
 		]);
 	}
 
@@ -124,7 +124,7 @@ class ServiceProvider extends IlluminateServiceProvider {
 	 */
 	protected function bootMiddleware() {
 		$router = $this->app->make('router');
-		$router->aliasMiddleware('saml2.resolveTenant', \Mkhyman\Saml2\Http\Middleware\ResolveTenant::class);
+		$router->aliasMiddleware('saml2.resolveTenant', \Hroc\Saml2\Http\Middleware\ResolveTenant::class);
 	}
 
 	/**

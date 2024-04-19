@@ -1,9 +1,9 @@
 <?php
 
-namespace Mkhyman\Saml2\Tests;
+namespace Hroc\Saml2\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Mkhyman\Saml2\Auth;
+use Hroc\Saml2\Auth;
 
 class Saml2AuthTest extends TestCase
 {
@@ -190,11 +190,11 @@ class Saml2AuthTest extends TestCase
     /**
      * Create a fake tenant.
      *
-     * @return \Mkhyman\Saml2\Models\Tenant
+     * @return \Hroc\Saml2\Models\Tenant
      */
     protected function mockTenant()
     {
-        return new \Mkhyman\Saml2\Models\Tenant();
+        return new \Hroc\Saml2\Models\Tenant();
     }
 }
 

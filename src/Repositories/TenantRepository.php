@@ -8,7 +8,7 @@ use Hroc\Saml2\Models\Tenant;
 /**
  * Class TenantRepository
  *
- * @package Mkhyman\Saml2\Repositories
+ * @package Hroc\Saml2\Repositories
  */
 class TenantRepository
 {

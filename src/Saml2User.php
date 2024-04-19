@@ -9,7 +9,7 @@ use Hroc\Saml2\Models\Tenant;
 /**
  * Class Saml2User
  *
- * @package Mkhyman\Saml2
+ * @package Hroc\Saml2
  */
 class Saml2User
 {

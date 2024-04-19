@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Mkhyman\Saml2\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth as LaravelAuth;
@@ -7,6 +7,7 @@ use Mkhyman\Saml2\Events\SignedIn;
 use Mkhyman\Saml2\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use OneLogin\Saml2\Error as OneLoginError;
 
 /**
@@ -99,7 +100,7 @@ class Saml2Controller extends Controller
     /**
      * Initiate a login request.
      *
-     * @param Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @param Auth $auth
      *
      * @return void
@@ -109,14 +110,22 @@ class Saml2Controller extends Controller
     public function login(Request $request, Auth $auth)
     {
         $redirectUrl = $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
+        $stay = true;            // we need to disable the auto redirect so we can record the request id
 
-        $auth->login($request->query('returnTo', $redirectUrl));
+        // setup login request and store slo url
+        $sloUrl = $auth->login($request->query('returnTo', $redirectUrl), [], false, false, $stay);
+
+        // record the request id in the session so we can use it later when we receive the response
+        Session::put('sso.AuthNRequestID', $auth->getLastRequestID());
+
+        // now we manually redirect since we stopped auto redirection earlier
+        $auth->redirectTo($sloUrl);
     }
 
     /**
      * Initiate a logout request.
      *
-     * @param Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @param Auth $auth
      *
      * @return void

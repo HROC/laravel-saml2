@@ -36,14 +36,13 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "Saml2": "HROC\\Saml2\\Facades\\Auth"
+                "Saml2": "Hroc\\Saml2\\Facades\\Auth"
             },
             "providers": [
-                "HROC\\Saml2\\ServiceProvider"
+                "Hroc\\Saml2\\ServiceProvider"
             ]
         },
         "branch-aliases": {
-            "dev-master": "2.0.8-dev"
         }
     },
     "minimum-stability": "dev",

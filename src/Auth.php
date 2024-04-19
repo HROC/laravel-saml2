@@ -71,6 +71,16 @@ class Auth
     }
 
     /**
+     * The ID of the last message processed.
+     *
+     * @return String
+     */
+    public function getLastRequestId()
+    {
+        return $this->base->getLastRequestId();
+    }
+
+    /**
      * Initiate a saml2 login flow.
      *
      * It will redirect! Before calling this, check if user is
@@ -242,5 +252,20 @@ class Auth
     public function getTenant()
     {
         return $this->tenant;
+    }
+
+    /**
+     * Redirects the user to the url past by parameter
+     * or to the url that we defined in our SSO Request.
+     *
+     * @param string $url        The target URL to redirect the user.
+     * @param array  $parameters Extra parameters to be passed as part of the url
+     * @param bool   $stay       True if we want to stay (returns the url string) False to redirect
+     *
+     * @return string|null
+     */
+    public function redirectTo($url = '', array $parameters = array(), $stay = false)
+    {
+        $this->base->redirectTo($url, $parameters, $stay);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Mkhyman\Saml2;
+namespace Hroc\Saml2;
 
 use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\LogoutResponse;

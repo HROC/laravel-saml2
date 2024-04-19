@@ -1,12 +1,12 @@
 <?php
 
-namespace Mkhyman\Saml2;
+namespace Hroc\Saml2;
 
 use OneLogin\Saml2\Auth as OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Container\Container;
-use Mkhyman\Saml2\Models\Tenant;
+use Hroc\Saml2\Models\Tenant;
 use Illuminate\Support\Arr;
 
 /**

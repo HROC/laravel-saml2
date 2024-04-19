@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace Mkhyman\Saml2\Http\Controllers;
+namespace Hroc\Saml2\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth as LaravelAuth;
-use Mkhyman\Saml2\Events\SignedIn;
-use Mkhyman\Saml2\Auth;
+use Hroc\Saml2\Events\SignedIn;
+use Hroc\Saml2\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;

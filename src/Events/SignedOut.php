@@ -1,6 +1,6 @@
 <?php
 
-namespace Mkhyman\Saml2\Events;
+namespace Hroc\Saml2\Events;
 
 /**
  * Class LoggedOut

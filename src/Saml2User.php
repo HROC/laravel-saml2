@@ -1,10 +1,10 @@
 <?php
 
-namespace Mkhyman\Saml2;
+namespace Hroc\Saml2;
 
 //use OneLogin\Saml2\Auth as OneLoginAuth;
-use Mkhyman\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
-use Mkhyman\Saml2\Models\Tenant;
+use Hroc\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
+use Hroc\Saml2\Models\Tenant;
 
 /**
  * Class Saml2User

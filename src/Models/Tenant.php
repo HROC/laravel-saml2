@@ -1,6 +1,6 @@
 <?php
 
-namespace Mkhyman\Saml2\Models;
+namespace Hroc\Saml2\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

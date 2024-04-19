@@ -1,6 +1,6 @@
 <?php
 
-namespace Mkhyman\Saml2\Facades;
+namespace Hroc\Saml2\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mkhyman\Saml2\Commands;
+namespace Hroc\Saml2\Commands;
 
 /**
  * Trait ValidatesInput

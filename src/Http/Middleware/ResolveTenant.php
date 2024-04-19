@@ -1,9 +1,9 @@
 <?php
 
-namespace Mkhyman\Saml2\Http\Middleware;
+namespace Hroc\Saml2\Http\Middleware;
 
-use Mkhyman\Saml2\Models\Tenant;
-use Mkhyman\Saml2\Repositories\TenantRepository;
+use Hroc\Saml2\Models\Tenant;
+use Hroc\Saml2\Repositories\TenantRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

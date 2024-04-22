@@ -9,6 +9,7 @@ use Hroc\Saml2\Events\IdpLogin;
 use Hroc\Saml2\Models\Saml2LoginRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use OneLogin\Saml2\Error as OneLoginError;
 
 /**
@@ -116,15 +117,17 @@ class Saml2Controller extends Controller
 
         // setup login request and store slo url
         $sloUrl = $auth->login($redirectUrl, [], false, false, $stay);
+        $requestId = $auth->getLastRequestID();
 
         // store the request id and redirect url in the database
         $dbSaml2LoginRequest = new Saml2LoginRequest();
-        $dbSaml2LoginRequest->request_id = $auth->getLastRequestID();
+        $dbSaml2LoginRequest->request_id = $requestId;
         $dbSaml2LoginRequest->redirect_url = $redirectUrl;
         $dbSaml2LoginRequest->save();
 
         // dispatch event in case app needs to do something with the request id
-        IdpLogin::dispatch($auth->getLastRequestID(), $redirectUrl);
+        Session::put('saml2.login.requestId', $requestId);
+        IdpLogin::dispatch($requestId, $redirectUrl);
 
         // now we manually redirect since we stopped auto redirection earlier
         $auth->redirectTo($sloUrl);

@@ -5,9 +5,10 @@ namespace Hroc\Saml2\Http\Controllers;
 use Illuminate\Support\Facades\Auth as LaravelAuth;
 use Hroc\Saml2\Events\SignedIn;
 use Hroc\Saml2\Auth;
+use Hroc\Saml2\Events\IdpLogin;
+use Hroc\Saml2\Models\Saml2LoginRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use OneLogin\Saml2\Error as OneLoginError;
 
 /**
@@ -110,13 +111,20 @@ class Saml2Controller extends Controller
     public function login(Request $request, Auth $auth)
     {
         $redirectUrl = $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
+        $redirectUrl = $request->query('returnTo', $redirectUrl);
         $stay = true;            // we need to disable the auto redirect so we can record the request id
 
         // setup login request and store slo url
-        $sloUrl = $auth->login($request->query('returnTo', $redirectUrl), [], false, false, $stay);
+        $sloUrl = $auth->login($redirectUrl, [], false, false, $stay);
 
-        // record the request id in the session so we can use it later when we receive the response
-        Session::put('sso.AuthNRequestID', $auth->getLastRequestID());
+        // store the request id and redirect url in the database
+        $dbSaml2LoginRequest = new Saml2LoginRequest();
+        $dbSaml2LoginRequest->request_id = $auth->getLastRequestID();
+        $dbSaml2LoginRequest->redirect_url = $redirectUrl;
+        $dbSaml2LoginRequest->save();
+
+        // dispatch event in case app needs to do something with the request id
+        IdpLogin::dispatch($auth->getLastRequestID(), $redirectUrl);
 
         // now we manually redirect since we stopped auto redirection earlier
         $auth->redirectTo($sloUrl);

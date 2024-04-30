@@ -15,16 +15,17 @@ class IdpLogin
 	use Dispatchable;
 
 	/**
-	 * The SAML2 login request
+	 * The login request model
 	 *
 	 * @var Saml2LoginRequest
 	 */
 	public Saml2LoginRequest $saml2LoginRequest;
 
 	/**
-	 * IdpLogin constructor.
+	 * LoggedIn constructor.
 	 *
-	 * @param Saml2LoginRequest $saml2LoginRequest
+	 * @param Saml2User $user
+	 * @param Auth $auth
 	 */
 	public function __construct(Saml2LoginRequest $saml2LoginRequest)
 	{

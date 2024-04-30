@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Hroc\Saml2\Events;
 
+use Hroc\Saml2\Models\Saml2LoginRequest;
 use Illuminate\Foundation\Events\Dispatchable;
 
 /**
@@ -14,28 +15,19 @@ class IdpLogin
 	use Dispatchable;
 
 	/**
-	 * The generated saml request id.
+	 * The SAML2 login request
 	 *
-	 * @var string
+	 * @var Saml2LoginRequest
 	 */
-	public $authNRequestId;
+	public Saml2LoginRequest $saml2LoginRequest;
 
 	/**
-	 * The redirect url.
+	 * IdpLogin constructor.
 	 *
-	 * @var string
+	 * @param Saml2LoginRequest $saml2LoginRequest
 	 */
-	public $redirectUrl;
-
-	/**
-	 * LoggedIn constructor.
-	 *
-	 * @param Saml2User $user
-	 * @param Auth $auth
-	 */
-	public function __construct(string $authNRequestId, string $redirectUrl)
+	public function __construct(Saml2LoginRequest $saml2LoginRequest)
 	{
-		$this->authNRequestId = $authNRequestId;
-		$this->redirectUrl = $redirectUrl;
+		$this->saml2LoginRequest = $saml2LoginRequest;
 	}
 }

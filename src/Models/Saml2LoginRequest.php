@@ -33,7 +33,7 @@ class Saml2LoginRequest extends Model
 	 */
 	protected $fillable = [
 		'request_id',
-		'redirect_url',
+		'return_to',
 	];
 
 	/**

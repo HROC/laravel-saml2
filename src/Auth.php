@@ -5,6 +5,7 @@ namespace Hroc\Saml2;
 use Hroc\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
 use Hroc\Saml2\Models\Tenant;
 use Hroc\Saml2\Events\SignedOut;
+use Illuminate\Support\Facades\Log;
 use OneLogin\Saml2\Error as OneLoginError;
 
 /**
@@ -148,7 +149,13 @@ class Auth
      */
     public function acs()
     {
+        // we do not have the same session because the response is posted back and we have cookie setting same_site=lax therefore we can not get the AuthNRequestID from the session
+        // this means we can not pass the AuthNRequestID into processResponse so we need to find another way to check it
         $this->base->processResponse();
+
+        // check the AuthNRequestID from the response, we can not confirm it was this user but we have stored it in the db
+        Log::info('acs - getLastRequestId: ' . $this->base->getLastRequestId());
+        Log::info('acs - dom parsing: ' . $this->base->getAttribute('InResponseTo'));
 
         $errors = $this->base->getErrors();
 

@@ -17,7 +17,7 @@ class CreateSaml2LoginRequestsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('request_id');
+            $table->string('request_id',255);
             $table->string('return_to');
             $table->tinyInteger('response_processed')->default(0);
             $table->timestamps();

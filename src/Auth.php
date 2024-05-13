@@ -2,11 +2,15 @@
 
 namespace Hroc\Saml2;
 
+use \DOMDocument;
 use Hroc\Saml2\ExtendedOneLoginAuth as OneLoginAuth;
 use Hroc\Saml2\Models\Tenant;
 use Hroc\Saml2\Events\SignedOut;
-use Illuminate\Support\Facades\Log;
+use Hroc\Saml2\Models\Saml2LoginRequest;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
 use OneLogin\Saml2\Error as OneLoginError;
+use OneLogin\Saml2\Utils;
 
 /**
  * Class Auth
@@ -154,8 +158,23 @@ class Auth
         $this->base->processResponse();
 
         // check the AuthNRequestID from the response, we can not confirm it was this user but we have stored it in the db
-        Log::info('acs - getLastRequestId: ' . $this->base->getLastRequestId());
-        Log::info('acs - dom parsing: ' . $this->base->getAttribute('InResponseTo'));
+        $inResponse = $this->getInResponseTo();
+        if(!$inResponse) {
+            return ['error' => 'Could not authenticate due to missing AuthNRequestID'];
+        }
+
+        $dbLoginRequest = Saml2LoginRequest::where('request_id', $inResponse)
+            ->where('created_at', '>', Carbon::now()
+            ->subMinutes(config('sso.authNRequest_expiry_mins', 60)))       // in case of the VERY unlikely event of a request id collision
+            ->first();
+
+        if (!$dbLoginRequest) {
+            return ['error' => 'Could not match InResponseTo db entries'];
+        }
+
+        if ($dbLoginRequest->is_processed) {
+            return ['error' => 'Could not authenticate due to already processed AuthNRequestID'];
+        }
 
         $errors = $this->base->getErrors();
 
@@ -167,7 +186,34 @@ class Auth
             return ['error' => 'Could not authenticate'];
         }
 
+        // register that this response was processed so it can not be processed again to reduce replay attacks
+        $dbLoginRequestId = $dbLoginRequest->id;
+        $dbLoginRequest->response_processed = 1;
+        $dbLoginRequest->save();
+        $dbLoginRequest->delete();
+
+        // store the login request id in the session so we can use it SignedIn event
+        Session::put('sso.third_party.saml2_login_request_id', $dbLoginRequestId);
+
         return null;
+    }
+
+    /**
+     * Get the InResponseTo info from a SAML Response from the Idp. 
+     * 
+     * @return string|null
+     */
+    private function getInResponseTo() {
+        // since we can not get the previously generated DOMDocument from the oneLogin library (we can only get the xml string) we need to parse the response xml AGAIN (such a waste of processing)
+        $document = new DOMDocument();
+        $document = Utils::loadXML($document, $this->base->getLastResponseXML());
+
+        $inResponseTo = null;
+        if ($document->documentElement->hasAttribute('InResponseTo')) {
+            $inResponseTo = $document->documentElement->getAttribute('InResponseTo');
+        }
+
+        return $inResponseTo;
     }
 
     /**

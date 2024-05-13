@@ -63,7 +63,11 @@ class Saml2Controller extends Controller
 
         $user = $auth->getSaml2User();
 
-        event(new SignedIn($user, $auth));
+        // get login request info from db
+        $dbLoginRequestId = Session::get('sso.third_party.saml2_login_request_id');
+
+        event(new SignedIn($user, $auth, Session::get('sso.third_party.saml2_login_request_id')));
+        Session::forget('sso.third_party.saml2_login_request_id');          // no longer need it so clean up session
 
         $redirectUrl = $user->getIntendedUrl();
 

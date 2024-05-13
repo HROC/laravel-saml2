@@ -27,15 +27,23 @@ class SignedIn
     public $auth;
 
     /**
+     * The ID of the SAML2 login request.
+     *
+     * @var int
+     */
+    public int $dbSaml2LoginRequestId;
+
+    /**
      * LoggedIn constructor.
      *
      * @param Saml2User $user
      * @param Auth $auth
      */
-    public function __construct(Saml2User $user, Auth $auth)
+    public function __construct(Saml2User $user, Auth $auth, int $dbSaml2LoginRequestId)
     {
         $this->user = $user;
         $this->auth = $auth;
+        $this->dbSaml2LoginRequestId = $dbSaml2LoginRequestId;
     }
 
     /**

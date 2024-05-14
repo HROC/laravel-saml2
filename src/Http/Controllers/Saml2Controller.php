@@ -115,10 +115,7 @@ class Saml2Controller extends Controller
      */
     public function login(Request $request, Auth $auth)
     {
-        // $returnTo = $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
-        // $returnTo = $request->query('returnTo', $returnTo);
-
-        $returnTo = $request->query('returnTo', $returnTo) ?: $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
+        $returnTo = $request->query('returnTo') ?: $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
         $stay = true;            // we need to disable the auto redirect so we can record the request id
 
         // setup login request and store slo url

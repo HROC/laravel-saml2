@@ -65,9 +65,9 @@ class Saml2Controller extends Controller
 
         // get login request info from db
         $dbLoginRequestId = Session::get('sso.third_party.saml2_login_request_id');
-
-        event(new SignedIn($user, $auth, Session::get('sso.third_party.saml2_login_request_id')));
         Session::forget('sso.third_party.saml2_login_request_id');          // no longer need it so clean up session
+
+        event(new SignedIn($user, $auth, $dbLoginRequestId));
 
         $redirectUrl = $user->getIntendedUrl();
 
@@ -115,8 +115,10 @@ class Saml2Controller extends Controller
      */
     public function login(Request $request, Auth $auth)
     {
-        $returnTo = $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
-        $returnTo = $request->query('returnTo', $returnTo);
+        // $returnTo = $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
+        // $returnTo = $request->query('returnTo', $returnTo);
+
+        $returnTo = $request->query('returnTo', $returnTo) ?: $auth->getTenant()->relay_state_url ?: config('saml2.loginRoute');
         $stay = true;            // we need to disable the auto redirect so we can record the request id
 
         // setup login request and store slo url

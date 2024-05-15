@@ -4,7 +4,7 @@ namespace Hroc\Saml2\Events;
 
 use Hroc\Saml2\Saml2User;
 use Hroc\Saml2\Auth;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class LoggedIn
@@ -35,11 +35,11 @@ class SignedIn
     public int $dbSaml2LoginRequestId;
 
     /**
-     * If a custom response is needed then populate this in a listener
+     * If a custom redirect response is needed then populate this in a listener
      *
-     * @var Response
+     * @var ?RedirectResponse
      */
-    public ?Response $response;
+    public ?RedirectResponse $response;
 
     /**
      * LoggedIn constructor.

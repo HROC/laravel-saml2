@@ -4,6 +4,7 @@ namespace Hroc\Saml2\Events;
 
 use Hroc\Saml2\Saml2User;
 use Hroc\Saml2\Auth;
+use Illuminate\Http\Response;
 
 /**
  * Class LoggedIn
@@ -34,6 +35,13 @@ class SignedIn
     public int $dbSaml2LoginRequestId;
 
     /**
+     * If a custom response is needed then populate this in a listener
+     *
+     * @var Response
+     */
+    public ?Response $response;
+
+    /**
      * LoggedIn constructor.
      *
      * @param Saml2User $user
@@ -44,6 +52,7 @@ class SignedIn
         $this->user = $user;
         $this->auth = $auth;
         $this->dbSaml2LoginRequestId = $dbSaml2LoginRequestId;
+        $this->response = null;     // this maybe set by an event listener to override the default response
     }
 
     /**

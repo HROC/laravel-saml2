@@ -67,15 +67,19 @@ class Saml2Controller extends Controller
         $dbLoginRequestId = Session::get('sso.third_party.saml2_login_request_id');
         Session::forget('sso.third_party.saml2_login_request_id');          // no longer need it so clean up session
 
-        event(new SignedIn($user, $auth, $dbLoginRequestId));
+        $event = new SignedIn($user, $auth, $dbLoginRequestId);
+        event($event);
 
-        $redirectUrl = $user->getIntendedUrl();
-
-        if ($redirectUrl) {
-            return redirect($redirectUrl);
+        // check if a custom event was added a custom Response to the event by a listener, if it was then return that response
+        if ($event->response) {
+            return $event->response;
+        } else {
+            return redirect(
+                $user->getIntendedUrl()
+                ?: $auth->getTenant()->relay_state_url 
+                ?: config('saml2.loginRoute')
+            );
         }
-
-        return redirect($auth->getTenant()->relay_state_url ?: config('saml2.loginRoute'));
     }
 
     /**

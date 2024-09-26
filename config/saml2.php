@@ -133,7 +133,7 @@ return [
     | Defines the log channel for SAML log.
     |
     */
-    'logChannel' => env('SAML2_LOG_CHANNEL', env('LOG_CHANNEL', 'default'));
+    'logChannel' => env('SAML2_LOG_CHANNEL', env('LOG_CHANNEL', 'default')),
 
     /*
     |--------------------------------------------------------------------------

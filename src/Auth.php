@@ -8,6 +8,7 @@ use Hroc\Saml2\Models\Tenant;
 use Hroc\Saml2\Events\SignedOut;
 use Hroc\Saml2\Models\Saml2LoginRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use OneLogin\Saml2\Error as OneLoginError;
 use OneLogin\Saml2\Utils;
@@ -111,7 +112,18 @@ class Auth
         $setNameIdPolicy = true
     )
     {
-        return $this->base->login($returnTo, $parameters, $forceAuthn, $isPassive, $stay, $setNameIdPolicy);
+        $loginRedirect = $this->base->login($returnTo, $parameters, $forceAuthn, $isPassive, $stay, $setNameIdPolicy);
+
+        if(config('saml2.debug')) {
+            Log::channel(config('saml2.logChannel'))->info('ACS Login', [
+                'lastRequestId' => $this->base->getLastRequestId(),
+                'lastMessageId' => $this->base->getLastMessageId(),
+                'lastAssertionId' => $this->base->getLastAssertionId(),
+                'lastRequestXml' => $this->base->getLastRequestXML(),
+            ]);
+        }
+
+        return $loginRedirect;
     }
 
     /**
@@ -153,6 +165,15 @@ class Auth
      */
     public function acs()
     {
+        if(config('saml2.debug')) {
+            Log::channel(config('saml2.logChannel'))->info('ACS Processing', [
+                'lastRequestId' => $this->base->getLastRequestId(),
+                'lastMessageId' => $this->base->getLastMessageId(),
+                'lastAssertionId' => $this->base->getLastAssertionId(),
+                'lastResponseXML' => $this->base->getLastResponseXML(),
+            ]);
+        }
+
         // we do not have the same session because the response is posted back and we have cookie setting same_site=lax therefore we can not get the AuthNRequestID from the session
         // this means we can not pass the AuthNRequestID into processResponse so we need to find another way to check it
         $this->base->processResponse();
@@ -179,6 +200,9 @@ class Auth
         $errors = $this->base->getErrors();
 
         if (!empty($errors)) {
+            if(config('saml2.debug')) {
+                Log::channel(config('saml2.logChannel'))->error('ACS Processing Error', ["OneLogin Errors" => $errors]);
+            }
             return $errors;
         }
 

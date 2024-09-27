@@ -120,7 +120,7 @@ class Auth
                 'lastMessageId' => $this->base->getLastMessageId(),
                 'lastAssertionId' => $this->base->getLastAssertionId(),
                 'lastRequestXml' => $this->base->getLastRequestXML(),
-                'lastrResponseXml' => $this->base->getLastrResponseXML(),
+                'lastrResponseXml' => $this->base->getLastResponseXML(),
             ]);
         }
 

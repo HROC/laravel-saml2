@@ -120,6 +120,7 @@ class Auth
                 'lastMessageId' => $this->base->getLastMessageId(),
                 'lastAssertionId' => $this->base->getLastAssertionId(),
                 'lastRequestXml' => $this->base->getLastRequestXML(),
+                'lastrResponseXml' => $this->base->getLastrResponseXML(),
             ]);
         }
 
@@ -165,18 +166,19 @@ class Auth
      */
     public function acs()
     {
+        // we do not have the same session because the response is posted back and we have cookie setting same_site=lax therefore we can not get the AuthNRequestID from the session
+        // this means we can not pass the AuthNRequestID into processResponse so we need to find another way to check it
+        $this->base->processResponse();
+
         if(config('saml2.debug')) {
             Log::channel(config('saml2.logChannel'))->info('ACS Processing', [
                 'lastRequestId' => $this->base->getLastRequestId(),
                 'lastMessageId' => $this->base->getLastMessageId(),
                 'lastAssertionId' => $this->base->getLastAssertionId(),
+                'lastRequestXML' => $this->base->getLastRequestXML(),
                 'lastResponseXML' => $this->base->getLastResponseXML(),
             ]);
         }
-
-        // we do not have the same session because the response is posted back and we have cookie setting same_site=lax therefore we can not get the AuthNRequestID from the session
-        // this means we can not pass the AuthNRequestID into processResponse so we need to find another way to check it
-        $this->base->processResponse();
 
         // check the AuthNRequestID from the response, we can not confirm it was this user but we have stored it in the db
         $inResponse = $this->getInResponseTo();
